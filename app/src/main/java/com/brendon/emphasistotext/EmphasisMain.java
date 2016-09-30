@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EmphasisMain extends AppCompatActivity implements
 EmphasisCheckboxFragment.EmpasisDialogListener{
@@ -37,11 +38,20 @@ EmphasisCheckboxFragment.EmpasisDialogListener{
             public void onClick(View view) {
 
                 mUserPhrase = mWordEntry.getText().toString();
-                mWordEntry.setText("");
 
+                // Checks for empty field.
+                if (mWordEntry.getText().toString().isEmpty()){
 
-                EmphasisCheckboxFragment emphasisDialog = EmphasisCheckboxFragment.newInstance(mUserPhrase);
-                emphasisDialog.show(getFragmentManager(), "show dialog");
+                    Toast.makeText(EmphasisMain.this, "Please make an entry", Toast.LENGTH_LONG).show();
+
+                } else {
+
+                    mWordEntry.setText("");
+
+                    EmphasisCheckboxFragment emphasisDialog = EmphasisCheckboxFragment.newInstance(mUserPhrase);
+                    emphasisDialog.show(getFragmentManager(), "show dialog");
+
+                }
 
             }
         });

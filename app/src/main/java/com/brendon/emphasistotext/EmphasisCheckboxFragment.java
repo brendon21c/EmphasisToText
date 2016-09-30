@@ -28,7 +28,7 @@ public class EmphasisCheckboxFragment extends DialogFragment{
 
     interface EmpasisDialogListener {
 
-        //TODO add in information for options.
+        //TODO add in information
 
     }
 
@@ -66,6 +66,24 @@ public class EmphasisCheckboxFragment extends DialogFragment{
 
     }
 
+    private void newDialog(String finalResult) {
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+        dialog.setTitle("Your Result");
+        dialog.setMessage(finalResult);
+        dialog.show();
+
+        dialog.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                dialogInterface.dismiss();
+
+            }
+        });
+
+    }
+
 
 
     @Override
@@ -87,15 +105,74 @@ public class EmphasisCheckboxFragment extends DialogFragment{
         mExclimation = (CheckBox) view.findViewById(R.id.exclamation_checkbox);
         mSmileyFace = (CheckBox) view.findViewById(R.id.smileyface_checkbox);
 
+        /*
+        I could'nt think of a more elegant solution to this issue, so I wrote a variable for
+        each possibility.
+         */
 
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                Toast.makeText(getActivity(), mUserPhrase, Toast.LENGTH_SHORT).show();
+                if (mCapital.isChecked() && mSmileyFace.isChecked() && mExclimation.isChecked()) {
+
+                    mUserPhrase = (mUserPhrase + "!" + " :)").toUpperCase();
+                    dialogInterface.dismiss();
+                    newDialog(mUserPhrase);
+
+                }
+
+                else if (mCapital.isChecked() && mExclimation.isChecked()) {
+
+                    mUserPhrase = (mUserPhrase + "!").toUpperCase();
+                    dialogInterface.dismiss();
+                    newDialog(mUserPhrase);
+
+                }
+                else if (mCapital.isChecked() && mSmileyFace.isChecked()) {
+
+                    mUserPhrase = (mUserPhrase + " :)").toUpperCase();
+                    dialogInterface.dismiss();
+                    newDialog(mUserPhrase);
+
+                }
+                else if (mSmileyFace.isChecked() && mExclimation.isChecked()) {
+
+                    mUserPhrase = mUserPhrase + "!" + " :)";
+                    dialogInterface.dismiss();
+                    newDialog(mUserPhrase);
+
+                }
+                else if (mCapital.isChecked()) {
+
+                    mUserPhrase = mUserPhrase.toUpperCase();
+                    dialogInterface.dismiss();
+                    newDialog(mUserPhrase);
+                }
+                else if (mExclimation.isChecked()) {
+
+                    mUserPhrase = mUserPhrase + "!";
+                    dialogInterface.dismiss();
+                    newDialog(mUserPhrase);
+
+                }
+                else if (mSmileyFace.isChecked()) {
+
+                    mUserPhrase = mUserPhrase + " :)";
+                    dialogInterface.dismiss();
+                    newDialog(mUserPhrase);
+
+                }
+                else {
+
+                    Toast.makeText(getActivity(), "Please make a selection", Toast.LENGTH_LONG).show();
+
+                }
+
 
             }
         });
+
 
         // Closes the dialog box
         builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {

@@ -14,7 +14,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enter a word."
+        android:text="Enter a word or phrase."
         android:id="@+id/text_edit_label"/>
 
     <EditText
