@@ -4,10 +4,8 @@ package com.brendon.emphasistotext;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +19,8 @@ public class EmphasisCheckboxFragment extends DialogFragment{
     CheckBox mCapital;
     CheckBox mExclimation;
     CheckBox mSmileyFace;
+
+    private String mUserPhrase;
 
 
     private EmpasisDialogListener mEmphasis; // Listener variable.
@@ -37,10 +37,13 @@ public class EmphasisCheckboxFragment extends DialogFragment{
     // Sets up the fragment and passes in the User string.
     public static EmphasisCheckboxFragment newInstance(String word) {
 
+
         Bundle bundle = new Bundle();
         bundle.putString(STRING_KEY, word);
 
+
         EmphasisCheckboxFragment fragment = new EmphasisCheckboxFragment();
+        //mUserPhrase = word;
         fragment.setArguments(bundle);
         return fragment;
 
@@ -63,8 +66,12 @@ public class EmphasisCheckboxFragment extends DialogFragment{
 
     }
 
+
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+        mUserPhrase = getArguments().getString(STRING_KEY);
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Select one or more options.");
@@ -85,7 +92,7 @@ public class EmphasisCheckboxFragment extends DialogFragment{
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                Toast.makeText(getActivity(), "Ok button works", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), mUserPhrase, Toast.LENGTH_SHORT).show();
 
             }
         });
